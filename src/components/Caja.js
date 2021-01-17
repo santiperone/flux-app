@@ -1,13 +1,32 @@
+import React from 'react';
 import './Caja.css';
 
-import ColorappStore from '../stores/ColorappStore';
+import ColorAppStore from '../stores/ColorAppStore';
 
-function Caja() {
-  return (
-    <div className="Caja">
-        <div className="color-container"></div>
-    </div>
-  );
+class Caja extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      color: ColorAppStore.getActiveColor()
+    }
+  }
+
+  componentDidMount() {
+    ColorAppStore.on('storeUpdated', this.updateColor);
+  }
+  componentWillUnmount() {
+    ColorAppStore.removeListener('storeUpdated', this.updateColor);
+  }
+  updateColor = () => {
+    this.setState({color: ColorAppStore.getActiveColor()});
+  }
+  render() {
+    return (
+      <div className="Caja">
+          <div className="color-container" style={{backgroundColor: this.state.color}}></div>
+      </div>
+    );
+  }
 }
 
 export default Caja;
