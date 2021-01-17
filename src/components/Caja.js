@@ -2,8 +2,8 @@ import './Caja.css';
 
 function Caja() {
   return (
-    <div className="App">
-
+    <div className="Caja">
+        <div className="color-container"></div>
     </div>
   );
 }
